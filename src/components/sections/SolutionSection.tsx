@@ -51,9 +51,9 @@ const SolutionSection = () => {
           className="text-center mb-6"
         >
           <h2 className="text-[clamp(24px,5vw,48px)] font-bold text-[var(--charcoal)] leading-tight mb-4">
-            SELA KHÔNG DẠY TIẾNG ANH.
+            NẾU CON ĐANG GHÉT TIẾNG ANH...
             <br />
-            <span className="gradient-text">SELA CHO NÃO CON "XEM PHIM".</span>
+            <span className="gradient-text">SELA SẼ KHIẾN CON THÍCH LẠI - VÌ HỌC NHƯ XEM PHIM.</span>
           </h2>
         </motion.div>
 

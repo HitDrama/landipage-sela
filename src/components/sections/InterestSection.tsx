@@ -140,8 +140,7 @@ const InterestSection = () => {
                   <strong className="text-white">
                     hình ảnh, cảm xúc, và sự lặp lại TỰ NHIÊN
                   </strong>{' '}
-                  - giống như cách con thuộc làu bài hát trên TikTok mà chẳng cần
-                  ai bắt học.
+                  - giống như con nhớ bộ phim hoạt hình yêu thích, vì cuốn hút, vì xem mãi không chán.
                 </p>
               </div>
             </div>
