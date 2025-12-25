@@ -1,0 +1,1576 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SELA English - Wireframe v2.0</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ========================================
+       CSS VARIABLES - Design Tokens
+       ======================================== */
+    :root {
+      /* Primary Colors */
+      --coral-burst: #FF6B4A;
+      --sunset-orange: #FF8F3F;
+      --energy-red: #E53935;
+
+      /* Secondary Colors */
+      --sky-trust: #4FC3F7;
+      --fresh-mint: #26A69A;
+
+      /* Neutrals */
+      --warm-white: #FFFBF7;
+      --cream: #FFF5EB;
+      --charcoal: #2D3748;
+      --light-gray: #E2E8F0;
+
+      /* Gradients */
+      --gradient-cta: linear-gradient(135deg, #FF6B4A, #E53935);
+      --gradient-mesh:
+        radial-gradient(ellipse at 20% 0%, rgba(255, 224, 178, 0.8) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 100%, rgba(179, 229, 252, 0.6) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(255, 143, 63, 0.2) 0%, transparent 70%);
+      --gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+
+      /* Typography */
+      --font-family: 'Be Vietnam Pro', system-ui, -apple-system, sans-serif;
+
+      /* Spacing */
+      --space-xs: 4px;
+      --space-sm: 8px;
+      --space-md: 16px;
+      --space-lg: 24px;
+      --space-xl: 32px;
+      --space-2xl: 48px;
+      --space-3xl: 64px;
+      --space-4xl: 96px;
+
+      /* Border Radius */
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-full: 9999px;
+
+      /* Shadows */
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+      --shadow-md: 0 8px 24px rgba(0,0,0,0.1);
+      --shadow-lg: 0 16px 48px rgba(0,0,0,0.12);
+      --shadow-cta: 0 8px 32px rgba(255,107,74,0.4);
+
+      /* Breakpoints (for reference) */
+      --bp-sm: 640px;
+      --bp-md: 768px;
+      --bp-lg: 1024px;
+      --bp-xl: 1280px;
+    }
+
+    /* ========================================
+       RESET & BASE
+       ======================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-family);
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--charcoal);
+      background: var(--warm-white);
+      overflow-x: hidden;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* ========================================
+       UTILITY CLASSES
+       ======================================== */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--space-md);
+    }
+
+    @media (min-width: 768px) {
+      .container {
+        padding: 0 var(--space-xl);
+      }
+    }
+
+    .section {
+      padding: var(--space-3xl) 0;
+    }
+
+    @media (min-width: 768px) {
+      .section {
+        padding: var(--space-4xl) 0;
+      }
+    }
+
+    /* Placeholder boxes for images */
+    .placeholder {
+      background: linear-gradient(135deg, var(--light-gray), #CBD5E0);
+      border: 2px dashed #A0AEC0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: #718096;
+      text-align: center;
+      border-radius: var(--radius-md);
+    }
+
+    /* ========================================
+       ANIMATIONS
+       ======================================== */
+    /* [ANIMATION: Pulse effect for CTA] */
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); box-shadow: var(--shadow-cta); }
+      50% { transform: scale(1.02); box-shadow: 0 12px 40px rgba(255,107,74,0.5); }
+    }
+
+    /* [ANIMATION: Floating elements] */
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-15px) rotate(5deg); }
+    }
+
+    /* [ANIMATION: Fade up on scroll] */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* [ANIMATION: Pop in] */
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .animate-fadeUp {
+      animation: fadeUp 0.6s ease-out forwards;
+    }
+
+    /* Reduced motion preference */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* ========================================
+       COMPONENTS
+       ======================================== */
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-sm);
+      padding: var(--space-md) var(--space-xl);
+      font-family: var(--font-family);
+      font-size: 16px;
+      font-weight: 700;
+      text-decoration: none;
+      border: none;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-height: 44px; /* Touch target */
+    }
+
+    .btn-primary {
+      background: var(--gradient-cta);
+      color: white;
+      box-shadow: var(--shadow-cta);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(255,107,74,0.5);
+    }
+
+    .btn-primary:focus {
+      outline: 3px solid var(--sky-trust);
+      outline-offset: 2px;
+    }
+
+    .btn-glass {
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.5);
+      color: var(--charcoal);
+    }
+
+    /* Cards */
+    .card {
+      background: white;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      padding: var(--space-lg);
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .card-glass {
+      background: rgba(255,255,255,0.8);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.5);
+    }
+
+    /* Typography */
+    .pre-headline {
+      font-size: 14px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--coral-burst);
+      margin-bottom: var(--space-sm);
+    }
+
+    @media (min-width: 768px) {
+      .pre-headline {
+        font-size: 16px;
+      }
+    }
+
+    .headline-hero {
+      font-size: clamp(32px, 8vw, 72px);
+      font-weight: 800;
+      line-height: 1.1;
+      color: var(--charcoal);
+      margin-bottom: var(--space-lg);
+    }
+
+    .headline-section {
+      font-size: clamp(24px, 5vw, 48px);
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--charcoal);
+      margin-bottom: var(--space-lg);
+    }
+
+    .sub-headline {
+      font-size: clamp(16px, 3vw, 20px);
+      font-weight: 400;
+      line-height: 1.6;
+      color: #4A5568;
+      margin-bottom: var(--space-xl);
+    }
+
+    .highlight {
+      color: var(--coral-burst);
+      font-weight: 700;
+    }
+
+    .text-gradient {
+      background: var(--gradient-cta);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ========================================
+       SECTION 1: HERO
+       ======================================== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      background: var(--gradient-mesh), var(--warm-white);
+      overflow: hidden;
+      padding: var(--space-3xl) 0;
+    }
+
+    .hero-container {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+      align-items: center;
+    }
+
+    @media (min-width: 1024px) {
+      .hero-container {
+        grid-template-columns: 1.2fr 1fr;
+        gap: var(--space-3xl);
+      }
+    }
+
+    .hero-content {
+      text-align: center;
+      z-index: 2;
+    }
+
+    @media (min-width: 1024px) {
+      .hero-content {
+        text-align: left;
+      }
+    }
+
+    .hero-visual {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero-image {
+      width: 100%;
+      max-width: 400px;
+      aspect-ratio: 4/3;
+      border-radius: var(--radius-lg);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* [PARALLAX HINT: Floating emojis move at 0.2x scroll speed] */
+    .floating-emoji {
+      position: absolute;
+      font-size: 32px;
+      animation: float 3s ease-in-out infinite;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .floating-emoji:nth-child(1) {
+      top: -10%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+
+    .floating-emoji:nth-child(2) {
+      top: 20%;
+      right: -5%;
+      animation-delay: 0.5s;
+      font-size: 40px;
+    }
+
+    .floating-emoji:nth-child(3) {
+      bottom: 10%;
+      left: -5%;
+      animation-delay: 1s;
+    }
+
+    .floating-emoji:nth-child(4) {
+      bottom: -5%;
+      right: 15%;
+      animation-delay: 1.5s;
+      font-size: 28px;
+    }
+
+    /* Background decorative blobs */
+    .hero-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.5;
+      z-index: 0;
+    }
+
+    .hero-blob-1 {
+      width: 300px;
+      height: 300px;
+      background: var(--sunset-orange);
+      top: -100px;
+      left: -100px;
+    }
+
+    .hero-blob-2 {
+      width: 400px;
+      height: 400px;
+      background: var(--sky-trust);
+      bottom: -150px;
+      right: -150px;
+    }
+
+    @media (min-width: 768px) {
+      .hero-blob-1 {
+        width: 500px;
+        height: 500px;
+      }
+      .hero-blob-2 {
+        width: 600px;
+        height: 600px;
+      }
+    }
+
+    /* ========================================
+       SECTION 2: INTEREST (Bento Grid)
+       ======================================== */
+    .interest {
+      background: var(--cream);
+      position: relative;
+    }
+
+    .bento-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-md);
+    }
+
+    @media (min-width: 768px) {
+      .bento-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-lg);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .bento-grid {
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: auto auto;
+      }
+    }
+
+    .bento-item {
+      padding: var(--space-lg);
+      border-radius: var(--radius-lg);
+      background: white;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s ease;
+    }
+
+    .bento-item:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    /* [LAYOUT: Asymmetric bento - Large item spans 2 cols] */
+    @media (min-width: 1024px) {
+      .bento-item--large {
+        grid-column: span 2;
+      }
+
+      .bento-item--highlight {
+        grid-column: span 2;
+        background: var(--gradient-cta);
+        color: white;
+      }
+    }
+
+    .bento-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: var(--space-md);
+      background: var(--cream);
+    }
+
+    .bento-item--highlight .bento-icon {
+      background: rgba(255,255,255,0.2);
+    }
+
+    .bento-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: var(--space-sm);
+    }
+
+    .bento-text {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #718096;
+    }
+
+    .bento-item--highlight .bento-text {
+      color: rgba(255,255,255,0.9);
+    }
+
+    /* Brain insight highlight box */
+    .brain-insight {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: var(--space-xl);
+      border-radius: var(--radius-lg);
+      color: white;
+      margin-top: var(--space-xl);
+    }
+
+    .brain-insight-icon {
+      font-size: 48px;
+      margin-bottom: var(--space-md);
+    }
+
+    .brain-insight-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: var(--space-sm);
+    }
+
+    /* ========================================
+       SECTION 3: SOLUTION (Two-column Glassmorphism)
+       ======================================== */
+    .solution {
+      background: var(--gradient-mesh), var(--warm-white);
+      position: relative;
+    }
+
+    .solution-header {
+      text-align: center;
+      margin-bottom: var(--space-2xl);
+    }
+
+    .solution-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+
+    @media (min-width: 768px) {
+      .solution-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-xl);
+      }
+    }
+
+    .solution-card {
+      background: rgba(255,255,255,0.8);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.6);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .solution-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--gradient-cta);
+    }
+
+    .solution-card-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      margin-bottom: var(--space-lg);
+      background: var(--cream);
+    }
+
+    .solution-card-badge {
+      display: inline-block;
+      padding: var(--space-xs) var(--space-md);
+      background: var(--coral-burst);
+      color: white;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: var(--radius-full);
+      margin-bottom: var(--space-md);
+    }
+
+    .solution-card-title {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: var(--space-md);
+    }
+
+    .solution-card-description {
+      font-size: 16px;
+      line-height: 1.7;
+      color: #4A5568;
+    }
+
+    .solution-card-metaphor {
+      margin-top: var(--space-lg);
+      padding: var(--space-md);
+      background: rgba(255,143,63,0.1);
+      border-radius: var(--radius-md);
+      font-style: italic;
+      color: var(--sunset-orange);
+      font-weight: 500;
+    }
+
+    /* AI Video method highlight */
+    .method-highlight {
+      margin-top: var(--space-2xl);
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: blur(20px);
+      border: 2px solid var(--coral-burst);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      text-align: center;
+    }
+
+    .method-highlight-title {
+      font-size: 28px;
+      font-weight: 800;
+      background: var(--gradient-cta);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: var(--space-md);
+    }
+
+    /* ========================================
+       SECTION 4: TRANSFORMATION (Before/After Cards)
+       ======================================== */
+    .transformation {
+      background: var(--warm-white);
+    }
+
+    .transformation-header {
+      text-align: center;
+      margin-bottom: var(--space-2xl);
+    }
+
+    .transformation-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+
+    @media (min-width: 768px) {
+      .transformation-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .transform-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .transform-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .transform-card--domino {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      color: white;
+    }
+
+    .transform-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-md);
+      padding: var(--space-lg);
+      background: var(--cream);
+      font-size: 32px;
+    }
+
+    .transform-card--domino .transform-header {
+      background: rgba(255,255,255,0.1);
+    }
+
+    .transform-arrow {
+      color: var(--coral-burst);
+      font-weight: 700;
+    }
+
+    .transform-body {
+      padding: var(--space-lg);
+    }
+
+    .transform-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: var(--space-md);
+    }
+
+    .transform-before,
+    .transform-after {
+      padding: var(--space-md);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--space-sm);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .transform-before {
+      background: #FEE2E2;
+      border-left: 4px solid var(--energy-red);
+    }
+
+    .transform-after {
+      background: #D1FAE5;
+      border-left: 4px solid var(--fresh-mint);
+    }
+
+    .transform-card--domino .transform-before,
+    .transform-card--domino .transform-after {
+      background: rgba(255,255,255,0.1);
+      border-left-color: var(--sky-trust);
+    }
+
+    .transform-card--domino .transform-after {
+      border-left-color: var(--fresh-mint);
+    }
+
+    .transform-quote {
+      margin-top: var(--space-md);
+      padding: var(--space-md);
+      background: rgba(255,143,63,0.1);
+      border-radius: var(--radius-md);
+      font-style: italic;
+      font-weight: 600;
+      text-align: center;
+      color: var(--sunset-orange);
+    }
+
+    .transform-card--domino .transform-quote {
+      background: rgba(79,195,247,0.2);
+      color: var(--sky-trust);
+    }
+
+    /* ========================================
+       SECTION 5: OBJECTION (Failed Investments)
+       ======================================== */
+    .objection {
+      background: var(--cream);
+      position: relative;
+    }
+
+    .objection-header {
+      text-align: center;
+      margin-bottom: var(--space-2xl);
+    }
+
+    .objection-content {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+    }
+
+    @media (min-width: 1024px) {
+      .objection-content {
+        grid-template-columns: 1fr 1fr;
+        align-items: start;
+      }
+    }
+
+    .failed-investments {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      box-shadow: var(--shadow-md);
+    }
+
+    .failed-list {
+      list-style: none;
+    }
+
+    .failed-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-md) 0;
+      border-bottom: 1px solid var(--light-gray);
+    }
+
+    .failed-item:last-child {
+      border-bottom: none;
+    }
+
+    .failed-icon {
+      width: 40px;
+      height: 40px;
+      background: #FEE2E2;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .failed-text {
+      flex: 1;
+    }
+
+    .failed-name {
+      font-weight: 600;
+      color: var(--charcoal);
+    }
+
+    .failed-price {
+      font-size: 14px;
+      color: #718096;
+    }
+
+    .failed-status {
+      font-size: 24px;
+    }
+
+    /* Visual metaphor */
+    .metaphor-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-lg);
+      padding: var(--space-xl);
+      background: #FEF3C7;
+      border-radius: var(--radius-lg);
+      margin-top: var(--space-lg);
+      font-size: 32px;
+    }
+
+    .metaphor-vs {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--charcoal);
+    }
+
+    /* SELA difference box */
+    .sela-difference {
+      background: var(--gradient-cta);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      color: white;
+    }
+
+    .sela-difference-icon {
+      font-size: 48px;
+      margin-bottom: var(--space-md);
+    }
+
+    .sela-difference-title {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: var(--space-md);
+    }
+
+    .sela-difference-text {
+      font-size: 16px;
+      line-height: 1.7;
+      opacity: 0.95;
+    }
+
+    .sela-difference-highlight {
+      margin-top: var(--space-lg);
+      padding: var(--space-md);
+      background: rgba(255,255,255,0.2);
+      border-radius: var(--radius-md);
+      font-weight: 600;
+    }
+
+    /* ========================================
+       SECTION 6: CTA (Viral Comparison + Form)
+       ======================================== */
+    .cta-section {
+      background: var(--gradient-mesh), var(--warm-white);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-header {
+      text-align: center;
+      margin-bottom: var(--space-2xl);
+    }
+
+    .cta-content {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+    }
+
+    @media (min-width: 1024px) {
+      .cta-content {
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+      }
+    }
+
+    /* Viral comparison */
+    .viral-comparison {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-lg);
+    }
+
+    .comparison-card {
+      padding: var(--space-xl);
+      border-radius: var(--radius-lg);
+      position: relative;
+    }
+
+    .comparison-bad {
+      background: #FEE2E2;
+      border: 2px solid #FCA5A5;
+    }
+
+    .comparison-good {
+      background: linear-gradient(135deg, #D1FAE5, #A7F3D0);
+      border: 2px solid var(--fresh-mint);
+    }
+
+    .comparison-emoji {
+      font-size: 48px;
+      margin-bottom: var(--space-md);
+    }
+
+    .comparison-price {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--charcoal);
+      margin-bottom: var(--space-sm);
+    }
+
+    .comparison-method {
+      font-size: 14px;
+      color: #4A5568;
+      margin-bottom: var(--space-md);
+    }
+
+    .comparison-result {
+      display: inline-block;
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--radius-full);
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .comparison-bad .comparison-result {
+      background: var(--energy-red);
+      color: white;
+    }
+
+    .comparison-good .comparison-result {
+      background: var(--fresh-mint);
+      color: white;
+    }
+
+    /* Registration form */
+    .registration-form {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .form-title {
+      font-size: 24px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: var(--space-lg);
+    }
+
+    .form-group {
+      margin-bottom: var(--space-md);
+    }
+
+    .form-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: var(--space-sm);
+      color: var(--charcoal);
+    }
+
+    .form-input {
+      width: 100%;
+      padding: var(--space-md);
+      font-family: var(--font-family);
+      font-size: 16px;
+      border: 2px solid var(--light-gray);
+      border-radius: var(--radius-md);
+      transition: all 0.3s ease;
+      min-height: 44px;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--coral-burst);
+      box-shadow: 0 0 0 3px rgba(255,107,74,0.2);
+    }
+
+    .form-input::placeholder {
+      color: #A0AEC0;
+    }
+
+    .form-submit {
+      width: 100%;
+      padding: var(--space-md) var(--space-xl);
+      font-size: 18px;
+      margin-top: var(--space-md);
+    }
+
+    /* Trust elements */
+    .trust-elements {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-md);
+      justify-content: center;
+      margin-top: var(--space-lg);
+      padding-top: var(--space-lg);
+      border-top: 1px solid var(--light-gray);
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      font-size: 13px;
+      color: #718096;
+    }
+
+    .trust-icon {
+      font-size: 16px;
+    }
+
+    /* Emotional close */
+    .emotional-close {
+      margin-top: var(--space-2xl);
+      text-align: center;
+      padding: var(--space-xl);
+      background: rgba(255,255,255,0.8);
+      backdrop-filter: blur(12px);
+      border-radius: var(--radius-lg);
+    }
+
+    .emotional-close p {
+      font-size: 18px;
+      line-height: 1.8;
+      color: #4A5568;
+      margin-bottom: var(--space-md);
+    }
+
+    .emotional-close strong {
+      color: var(--charcoal);
+      font-weight: 700;
+    }
+
+    /* ========================================
+       WIREFRAME ANNOTATIONS
+       ======================================== */
+    .annotation {
+      position: relative;
+    }
+
+    .annotation::after {
+      content: attr(data-note);
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: #805AD5;
+      color: white;
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      white-space: nowrap;
+      z-index: 100;
+      pointer-events: none;
+    }
+
+    /* Show annotations toggle */
+    .toggle-annotations {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+      background: #805AD5;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: var(--radius-full);
+      font-family: var(--font-family);
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: var(--shadow-md);
+    }
+
+    .annotations-hidden .annotation::after {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- Toggle Annotations Button -->
+  <button class="toggle-annotations" onclick="document.body.classList.toggle('annotations-hidden')">
+    Toggle Annotations
+  </button>
+
+  <!-- ========================================
+       SECTION 1: HERO
+       ======================================== -->
+  <section class="hero section" id="hero">
+    <!-- [PARALLAX: Background blobs move at 0.5x scroll speed] -->
+    <div class="hero-blob hero-blob-1 annotation" data-note="Blob: parallax 0.5x"></div>
+    <div class="hero-blob hero-blob-2"></div>
+
+    <div class="container hero-container">
+      <!-- Hero Content -->
+      <div class="hero-content annotation" data-note="Fade up on load">
+        <p class="pre-headline">Khong phai con luoi. Khong phai con dot.</p>
+
+        <h1 class="headline-hero">
+          CON CHI DANG <span class="text-gradient">SO TIENG ANH...</span>
+          <br>
+          <span style="font-size: 0.7em; font-weight: 600;">Va chang ai day con cach het so.</span>
+        </h1>
+
+        <p class="sub-headline">
+          Ba me cho con hoc them, thue gia su, mua sach, cai app... Nhung moi lan mo mieng noi tieng Anh, con van <strong class="highlight">dung hinh nhu wifi lag</strong>.
+        </p>
+
+        <a href="#register" class="btn btn-primary annotation" data-note="Pulse animation 2s loop">
+          <span>XEM CON "HET SO" NHU THE NAO</span>
+          <span style="font-size: 20px;">--></span>
+        </a>
+      </div>
+
+      <!-- Hero Visual -->
+      <div class="hero-visual">
+        <!-- [PARALLAX: Emojis move at 0.2x scroll + slight rotation] -->
+        <span class="floating-emoji annotation" data-note="Float + parallax 0.2x">😵</span>
+        <span class="floating-emoji">📚</span>
+        <span class="floating-emoji">😰</span>
+        <span class="floating-emoji">💭</span>
+
+        <div class="hero-image placeholder annotation" data-note="Meme-style kid image">
+          [Hinh em be ngoi truoc sach<br>mat do dan, mat vo hon<br>(kieu meme relatable)]
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       SECTION 2: INTEREST - Bento Grid
+       ======================================== -->
+  <section class="interest section" id="interest">
+    <div class="container">
+      <div style="text-align: center; margin-bottom: var(--space-2xl);">
+        <h2 class="headline-section annotation" data-note="Scroll reveal: fade up">
+          HOC TIENG ANH KIEU CU:<br>
+          <span class="text-gradient">CHEP 100 LAN, NHO DUOC... 0 LAN</span> 📝
+        </h2>
+      </div>
+
+      <!-- Bento Grid Layout -->
+      <div class="bento-grid annotation" data-note="Bento: asymmetric layout">
+        <!-- Pain Point 1 -->
+        <div class="bento-item annotation" data-note="Stagger reveal: 100ms">
+          <div class="bento-icon">📝</div>
+          <h3 class="bento-title">Chep phat 50 lan</h3>
+          <p class="bento-text">Hom sau quen sach. Tu vung vao dau nay, ra dau kia.</p>
+        </div>
+
+        <!-- Pain Point 2 -->
+        <div class="bento-item">
+          <div class="bento-icon">🗣️</div>
+          <h3 class="bento-title">Hoc thuoc nhu vet</h3>
+          <p class="bento-text">"I go, you go, he goes" - vao bai van sai lung tung.</p>
+        </div>
+
+        <!-- Pain Point 3 -->
+        <div class="bento-item">
+          <div class="bento-icon">✈️</div>
+          <h3 class="bento-title">Nao che do "may bay"</h3>
+          <p class="bento-text">Nghe co giang ngu phap, nao tu dong... bay mat.</p>
+        </div>
+
+        <!-- Result Box - Spans 2 columns -->
+        <div class="bento-item bento-item--highlight annotation" data-note="Gradient bg + span 2 cols">
+          <div class="bento-icon">😫</div>
+          <h3 class="bento-title" style="font-size: 22px;">Ket qua?</h3>
+          <p class="bento-text" style="font-size: 16px;">
+            Con ghet tieng Anh. Con so bi goi len bang.<br>
+            Con nghi minh "khong co khieu".
+          </p>
+        </div>
+      </div>
+
+      <!-- Brain Insight Highlight -->
+      <div class="brain-insight annotation" data-note="Pop in on scroll">
+        <div class="brain-insight-icon">🧠</div>
+        <h3 class="brain-insight-title">Nao bo khong hoc bang cach "chep di chep lai".</h3>
+        <p style="font-size: 16px; line-height: 1.7;">
+          Nao hoc bang <strong>hinh anh, cam xuc, va su lap lai TU NHIEN</strong> - giong nhu cach con thuoc lau bai hat tren TikTok ma chang can ai bat hoc.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       SECTION 3: SOLUTION - Glassmorphism Cards
+       ======================================== -->
+  <section class="solution section" id="solution">
+    <div class="container">
+      <div class="solution-header">
+        <h2 class="headline-section annotation" data-note="Scroll reveal">
+          SELA KHONG DAY TIENG ANH.<br>
+          <span class="text-gradient">SELA CHO NAO CON "XEM PHIM".</span>
+        </h2>
+        <p class="sub-headline">
+          Phuong phap <strong>AI Video Toan Nao</strong> - Con tuong dang giai tri, nhung nao dang... hoc.
+        </p>
+      </div>
+
+      <!-- Two-Column Solution Grid -->
+      <div class="solution-grid">
+        <!-- Video Tu Vung Card -->
+        <div class="solution-card annotation" data-note="Glassmorphism + hover lift">
+          <div class="solution-card-icon">🎬</div>
+          <span class="solution-card-badge">1 phut</span>
+          <h3 class="solution-card-title">Video Tu Vung</h3>
+          <p class="solution-card-description">
+            <strong>Khong chep. Khong doc nhu vet.</strong><br><br>
+            Con xem video co hinh anh song dong, am thanh cuon hut, cau chuyen thu vi. Tu vung tu "dan" vao nao, bat ra thanh phan xa.
+          </p>
+          <div class="solution-card-metaphor">
+            Giong nhu con nho ten nhan vat phim ma chang can ai bat hoc vay.
+          </div>
+
+          <!-- Placeholder for video preview -->
+          <div class="placeholder" style="height: 160px; margin-top: var(--space-lg);">
+            [Video preview placeholder<br>1-minute vocabulary video]
+          </div>
+        </div>
+
+        <!-- Video Ngu Phap Card -->
+        <div class="solution-card">
+          <div class="solution-card-icon">🎯</div>
+          <span class="solution-card-badge">2 phut</span>
+          <h3 class="solution-card-title">Video Ngu Phap</h3>
+          <p class="solution-card-description">
+            <strong>Khong cong thuc. Khong bai tap kho khan.</strong><br><br>
+            Con xem, con hieu, con dung dung - ma khong can biet "day la thi gi".
+          </p>
+          <div class="solution-card-metaphor">
+            Giong nhu con noi tieng Viet chuan ma co bao gio hoc "chu ngu + vi ngu" dau?
+          </div>
+
+          <!-- Placeholder for video preview -->
+          <div class="placeholder" style="height: 160px; margin-top: var(--space-lg);">
+            [Video preview placeholder<br>2-minute grammar video]
+          </div>
+        </div>
+      </div>
+
+      <!-- AI Video Method Highlight -->
+      <div class="method-highlight annotation" data-note="Border accent + scale on hover">
+        <h3 class="method-highlight-title">AI Video Toan Nao</h3>
+        <p style="color: var(--charcoal); font-size: 16px;">
+          Cong nghe AI ket hop voi khoa hoc nao bo, tao ra video hoc tap "gay nghien" - con tuong dang giai tri, nao dang... luu tru.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       SECTION 4: TRANSFORMATION - Before/After Cards
+       ======================================== -->
+  <section class="transformation section" id="transformation">
+    <div class="container">
+      <div class="transformation-header">
+        <h2 class="headline-section annotation" data-note="Scroll reveal">
+          TU "CON KHONG BIET A"<br>
+          <span class="text-gradient">---> "DE CON TRA LOI!"</span>
+        </h2>
+        <p class="sub-headline">
+          Chi can con tin "minh lam duoc", moi thu se khac.
+        </p>
+      </div>
+
+      <!-- Transformation Cards Grid -->
+      <div class="transformation-grid">
+        <!-- Card 1: So -> Tu tin -->
+        <div class="transform-card annotation" data-note="Hover: lift + shadow">
+          <div class="transform-header">
+            <span>😰</span>
+            <span class="transform-arrow">--></span>
+            <span>😎</span>
+          </div>
+          <div class="transform-body">
+            <h3 class="transform-title">Tu SO sang TU TIN</h3>
+            <div class="transform-before">
+              <strong>Truoc:</strong> Co goi ten --> Tim dap loan --> Cui mat xuong ban
+            </div>
+            <div class="transform-after">
+              <strong>Sau:</strong> Co goi ten --> Dung day --> Tra loi ro rang --> Ca lop ngac nhien
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Bi ep -> Tu nguyen -->
+        <div class="transform-card">
+          <div class="transform-header">
+            <span>😫</span>
+            <span class="transform-arrow">--></span>
+            <span>🎮</span>
+          </div>
+          <div class="transform-body">
+            <h3 class="transform-title">Tu BI EP sang TU NGUYEN</h3>
+            <div class="transform-before">
+              <strong>Truoc:</strong> "Con oi hoc tieng Anh di!" --> "Da..." --> Luot dien thoai
+            </div>
+            <div class="transform-after">
+              <strong>Sau:</strong> Con tu mo video hoc, ba me phai nhac: "Thoi nghi di con!"
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3: Domino Effect -->
+        <div class="transform-card transform-card--domino annotation" data-note="Dark theme card">
+          <div class="transform-header">
+            <span>💡</span>
+          </div>
+          <div class="transform-body">
+            <h3 class="transform-title">Hieu ung DOMINO</h3>
+            <p style="font-size: 14px; line-height: 1.6; margin-bottom: var(--space-md); opacity: 0.9;">
+              Khi con chien thang "con quai vat" mang ten tieng Anh, con se nhan ra:
+            </p>
+            <div class="transform-quote">
+              "Tieng Anh con lam duoc, con gi minh khong lam duoc?"
+            </div>
+            <p style="font-size: 14px; line-height: 1.6; margin-top: var(--space-md); opacity: 0.9;">
+              Tu tin nay se lan sang Toan, Ly, Hoa... va ca cuoc song.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       SECTION 5: OBJECTION - Failed Investments
+       ======================================== -->
+  <section class="objection section" id="objection">
+    <div class="container">
+      <div class="objection-header">
+        <h2 class="headline-section annotation" data-note="Scroll reveal">
+          "DAU TU BAO NHIEU TIEN ROI<br>
+          <span class="text-gradient">MA CON VAN SO TIENG ANH?"</span>
+        </h2>
+      </div>
+
+      <div class="objection-content">
+        <!-- Failed Investments List -->
+        <div>
+          <div class="failed-investments annotation" data-note="Stagger reveal">
+            <p style="color: #4A5568; margin-bottom: var(--space-lg);">
+              Ba me khong sai. Ba me da co gang het suc:
+            </p>
+
+            <ul class="failed-list">
+              <li class="failed-item">
+                <div class="failed-icon">🏫</div>
+                <div class="failed-text">
+                  <div class="failed-name">Trung tam A</div>
+                  <div class="failed-price">5 trieu/thang</div>
+                </div>
+                <span class="failed-status">❌</span>
+              </li>
+              <li class="failed-item">
+                <div class="failed-icon">👨‍🏫</div>
+                <div class="failed-text">
+                  <div class="failed-name">Gia su B</div>
+                  <div class="failed-price">500k/buoi</div>
+                </div>
+                <span class="failed-status">❌</span>
+              </li>
+              <li class="failed-item">
+                <div class="failed-icon">📱</div>
+                <div class="failed-text">
+                  <div class="failed-name">App C</div>
+                  <div class="failed-price">2 trieu/nam</div>
+                </div>
+                <span class="failed-status">❌</span>
+              </li>
+            </ul>
+
+            <p style="color: #4A5568; margin-top: var(--space-lg); font-weight: 500;">
+              <strong>Nhung con van so. Van ghet. Van "khong co khieu".</strong>
+            </p>
+          </div>
+
+          <!-- Visual Metaphor -->
+          <div class="metaphor-box annotation" data-note="Icon comparison">
+            <span>🚲</span>
+            <span class="metaphor-vs">=/=</span>
+            <span>🏎️</span>
+          </div>
+          <p style="text-align: center; font-size: 14px; color: #718096; margin-top: var(--space-sm);">
+            Phuong phap khong match voi nao bo cua con
+          </p>
+        </div>
+
+        <!-- SELA Difference Box -->
+        <div class="sela-difference annotation" data-note="CTA gradient + pop in">
+          <div class="sela-difference-icon">🎯</div>
+          <h3 class="sela-difference-title">SELA khac o cho:</h3>
+          <p class="sela-difference-text">
+            Chung toi khong "nhoi" kien thuc vao dau con.<br><br>
+            Chung toi <strong>"bat cong tac"</strong> niem tin trong con.
+          </p>
+          <div class="sela-difference-highlight">
+            Khi con tin minh lam duoc --> Con se lam duoc that.
+          </div>
+          <p style="margin-top: var(--space-md); font-size: 14px; opacity: 0.9; font-style: italic;">
+            Don gian vay thoi. Nhung khong phai ai cung biet cach.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       SECTION 6: CTA - Viral Comparison + Form
+       ======================================== -->
+  <section class="cta-section section" id="register">
+    <div class="container">
+      <div class="cta-header">
+        <h2 class="headline-section annotation" data-note="Scroll reveal">
+          DUNG DE TIEN DAU TU CHO CON...<br>
+          <span class="text-gradient">TRO THANH "MUOI BO BE"</span>
+        </h2>
+      </div>
+
+      <div class="cta-content">
+        <!-- Viral Comparison -->
+        <div class="viral-comparison annotation" data-note="Stagger reveal">
+          <!-- Bad Option -->
+          <div class="comparison-card comparison-bad">
+            <div class="comparison-emoji">💸</div>
+            <div class="comparison-price">Dau tu may trieu</div>
+            <div class="comparison-method">
+              Phuong phap chep phat, hoc thuoc, lam bai tap den mu mi...
+            </div>
+            <span class="comparison-result">NHU MUOI BO BE</span>
+            <p style="font-size: 13px; color: #718096; margin-top: var(--space-sm);">
+              Ton tien, ton thoi gian, con van so tieng Anh.
+            </p>
+          </div>
+
+          <!-- Good Option -->
+          <div class="comparison-card comparison-good">
+            <div class="comparison-emoji">✨</div>
+            <div class="comparison-price">Dau tu 1 trieu vao SELA</div>
+            <div class="comparison-method">
+              Phuong phap AI Video Toan Nao...
+            </div>
+            <span class="comparison-result">NGON LUON</span>
+            <p style="font-size: 13px; color: #047857; margin-top: var(--space-sm);">
+              Con tu tin, con thich hoc, ba me nhe dau.
+            </p>
+          </div>
+        </div>
+
+        <!-- Registration Form -->
+        <div class="registration-form annotation" data-note="Form with validation">
+          <h3 class="form-title">Dang ky hoc thu MIEN PHI</h3>
+
+          <form id="registerForm">
+            <div class="form-group">
+              <label class="form-label" for="parentName">Ho ten phu huynh *</label>
+              <input type="text" id="parentName" class="form-input" placeholder="Nguyen Van A" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="phone">So dien thoai *</label>
+              <input type="tel" id="phone" class="form-input" placeholder="0912 345 678" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="childName">Ten con</label>
+              <input type="text" id="childName" class="form-input" placeholder="Be Minh">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="childAge">Tuoi con</label>
+              <select id="childAge" class="form-input">
+                <option value="">Chon tuoi</option>
+                <option value="6-8">6 - 8 tuoi</option>
+                <option value="9-11">9 - 11 tuoi</option>
+                <option value="12-14">12 - 14 tuoi</option>
+                <option value="15+">15 tuoi tro len</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary form-submit annotation" data-note="Pulse animation">
+              CHO CON TRAI NGHIEM "NGON LUON" - MIEN PHI
+            </button>
+          </form>
+
+          <!-- Trust Elements -->
+          <div class="trust-elements">
+            <div class="trust-item">
+              <span class="trust-icon">🔒</span>
+              <span>Bao mat thong tin</span>
+            </div>
+            <div class="trust-item">
+              <span class="trust-icon">✓</span>
+              <span>Khong ung? Khong mat gi</span>
+            </div>
+            <div class="trust-item">
+              <span class="trust-icon">⭐</span>
+              <span>Ung? Con doi doi</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Emotional Close -->
+      <div class="emotional-close annotation" data-note="Glassmorphism + fade in">
+        <p>Tuoi tho con co bao nhieu nam dau.</p>
+        <p>Dung de con lon len voi ky uc: <em>"Hoi do minh so tieng Anh lam..."</em></p>
+        <p><strong>Hay de con lon len voi niem tin: "Minh lam duoc!"</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       WIREFRAME FOOTER
+       ======================================== -->
+  <footer style="background: var(--charcoal); color: white; padding: var(--space-xl); text-align: center;">
+    <p style="font-size: 14px; opacity: 0.7;">
+      SELA English Landing Page - Wireframe v2.0
+    </p>
+    <p style="font-size: 12px; opacity: 0.5; margin-top: var(--space-sm);">
+      Design Guidelines: Be Vietnam Pro font | Coral/Orange primary | Glassmorphism + Bento Grid
+    </p>
+  </footer>
+
+  <script>
+    // [SCRIPT: Form submission handler - placeholder]
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('Form submitted! (This is a wireframe demo)');
+    });
+
+    // [SCRIPT: Scroll reveal animations - would use Intersection Observer]
+    // Implementation note: Use IntersectionObserver for scroll-triggered animations
+    // Each section would have a .reveal class that triggers animation on viewport entry
+
+    // [SCRIPT: Parallax effect - would calculate on scroll]
+    // Implementation note: Use requestAnimationFrame for smooth parallax
+    // Calculate translateY based on scroll position and speed multiplier (0.2x, 0.3x, 0.5x)
+  </script>
+</body>
+</html>

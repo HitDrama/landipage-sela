@@ -1,6 +1,39 @@
 @import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
+/* ========================================
+   CSS CUSTOM PROPERTIES - Design Tokens
+   ======================================== */
+:root {
+  /* Primary Colors */
+  --coral-burst: #FF6B4A;
+  --sunset-orange: #FF8F3F;
+  --energy-red: #E53935;
+
+  /* Secondary Colors */
+  --sky-trust: #4FC3F7;
+  --fresh-mint: #26A69A;
+
+  /* Neutrals */
+  --warm-white: #FFFBF7;
+  --cream: #FFF5EB;
+  --charcoal: #2D3748;
+  --light-gray: #E2E8F0;
+
+  /* Gradients */
+  --gradient-cta: linear-gradient(135deg, #FF6B4A, #E53935);
+  --gradient-mesh:
+    radial-gradient(ellipse at 20% 0%, rgba(255, 224, 178, 0.8) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 100%, rgba(179, 229, 252, 0.6) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(255, 143, 63, 0.2) 0%, transparent 70%);
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+  --shadow-md: 0 8px 24px rgba(0,0,0,0.1);
+  --shadow-lg: 0 16px 48px rgba(0,0,0,0.12);
+  --shadow-cta: 0 8px 32px rgba(255,107,74,0.4);
+}
+
 /* Base styles */
 html {
   scroll-behavior: smooth;
@@ -8,24 +41,48 @@ html {
 
 body {
   font-family: 'Be Vietnam Pro', sans-serif;
-  @apply antialiased bg-white;
+  @apply antialiased;
+  background: var(--warm-white);
+  color: var(--charcoal);
   margin: 0;
 }
 
-/* Custom animations */
+/* ========================================
+   ANIMATIONS
+   ======================================== */
 @keyframes pulse-cta {
-  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.7); }
-  50% { transform: scale(1.02); box-shadow: 0 0 20px 10px rgba(249, 115, 22, 0); }
+  0%, 100% { transform: scale(1); box-shadow: var(--shadow-cta); }
+  50% { transform: scale(1.02); box-shadow: 0 12px 40px rgba(255,107,74,0.5); }
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-15px) rotate(5deg); }
+}
+
+@keyframes float-subtle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
 }
 
 @keyframes wiggle {
-  0%, 100% { transform: rotate(-1deg); }
-  50% { transform: rotate(1deg); }
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(2deg); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
 
 .animate-pulse-cta {
@@ -36,21 +93,123 @@ body {
   animation: float 3s ease-in-out infinite;
 }
 
+.animate-float-subtle {
+  animation: float-subtle 4s ease-in-out infinite;
+}
+
 .animate-wiggle {
   animation: wiggle 0.3s ease-in-out infinite;
 }
 
-/* Gradient text */
+.animate-fadeUp {
+  animation: fadeUp 0.6s ease-out forwards;
+}
+
+.animate-popIn {
+  animation: popIn 0.4s ease-out forwards;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ========================================
+   GRADIENT TEXT
+   ======================================== */
 .gradient-text {
-  @apply bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent;
+  background: var(--gradient-cta);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-/* Glass effect */
+/* ========================================
+   GLASSMORPHISM
+   ======================================== */
 .glass {
-  @apply backdrop-blur-md bg-white/90 border border-white/20;
+  background: rgba(255,255,255,0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.5);
 }
 
-/* Section styling */
+.glass-dark {
+  background: rgba(45,55,72,0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* ========================================
+   SECTION STYLING
+   ======================================== */
 .section-padding {
   @apply py-16 md:py-24 px-4 md:px-8;
+}
+
+/* Background variations */
+.bg-warm-white {
+  background: var(--warm-white);
+}
+
+.bg-cream {
+  background: var(--cream);
+}
+
+.bg-gradient-mesh {
+  background: var(--gradient-mesh), var(--warm-white);
+}
+
+/* ========================================
+   DECORATIVE ELEMENTS
+   ======================================== */
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.blob-orange {
+  background: var(--sunset-orange);
+}
+
+.blob-blue {
+  background: var(--sky-trust);
+}
+
+/* ========================================
+   CARD STYLES
+   ======================================== */
+.card-hover {
+  transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ========================================
+   BUTTON STYLES
+   ======================================== */
+.btn-gradient {
+  background: var(--gradient-cta);
+  box-shadow: var(--shadow-cta);
+  transition: all 0.3s ease;
+}
+
+.btn-gradient:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(255,107,74,0.5);
+}
+
+.btn-gradient:focus {
+  outline: 3px solid var(--sky-trust);
+  outline-offset: 2px;
 }
