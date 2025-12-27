@@ -27,7 +27,7 @@ const HeroSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="text-sm md:text-base font-medium uppercase tracking-wider text-[var(--coral-burst)] mb-3"
+              className="text-lg md:text-2xl font-semibold uppercase tracking-wider text-[var(--coral-burst)] mb-4"
             >
               Không phải con lười. Không phải con kém.
             </motion.p>
