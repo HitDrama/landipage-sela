@@ -42,8 +42,12 @@ const HeroSection = () => {
               CON CHỈ ĐANG{' '}
               <span className="gradient-text">SỢ TIẾNG ANH...</span>
               <br />
-              <span className="text-[0.7em] font-semibold">
-                Và chẳng ai dạy con cách hết sợ.
+              <span className="text-[0.45em] md:text-[0.30em] font-medium text-gray-500 whitespace-nowrap">
+                Giáo trình & cách học hiện tại đang khiến con SỢ
+              </span>
+              <br />
+              <span className="text-[0.65em] md:text-[0.50em] font-bold gradient-text">
+                SELA giúp con "HẾT SỢ"
               </span>
             </motion.h1>
 
@@ -66,10 +70,10 @@ const HeroSection = () => {
             >
               <a
                 href="#form-dang-ky"
-                className="inline-flex items-center gap-3 btn-gradient text-white text-lg md:text-xl font-bold px-8 py-4 rounded-full animate-pulse-cta"
+                className="inline-flex items-center gap-2 md:gap-3 btn-gradient text-white text-sm md:text-xl font-bold px-5 md:px-8 py-3 md:py-4 rounded-full animate-pulse-cta whitespace-nowrap"
               >
                 <span>XEM CON "HẾT SỢ" NHƯ THẾ NÀO</span>
-                <ArrowRight className="w-5 h-5" />
+                <ArrowRight className="w-4 h-4 md:w-5 md:h-5" />
               </a>
             </motion.div>
           </div>

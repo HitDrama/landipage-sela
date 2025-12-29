@@ -123,7 +123,7 @@ const InterestSection = () => {
             <p className="text-2xl md:text-3xl font-bold text-[var(--charcoal)]">
               Không phải con không có khiếu.
               <br />
-              <span className="gradient-text">Là phương pháp không có... não.</span> 🧠
+              <span className="gradient-text">Là phương pháp học không...vào não.</span> 🧠
             </p>
           </div>
 
@@ -138,9 +138,9 @@ const InterestSection = () => {
                 <p className="text-white/90 leading-relaxed md:text-lg">
                   Não học bằng{' '}
                   <strong className="text-white">
-                    hình ảnh, cảm xúc, và sự lặp lại TỰ NHIÊN
-                  </strong>{' '}
-                  - giống như con nhớ bộ phim hoạt hình yêu thích, vì cuốn hút, vì xem mãi không chán.
+                    cảm xúc qua thông tin đầu vào là hình ảnh, âm thanh, hoạt động
+                  </strong>
+                  , và lặp lại 1 cách tự nhiên. Giống như cách con nhớ nội dung, tình tiết 1 bộ phim hoạt hình vì sự cuốn hút, xem nữa, xem mãi. Thay vì nhồi nhét lặp lại như cách học cũ, khiến não tê liệt.
                 </p>
               </div>
             </div>

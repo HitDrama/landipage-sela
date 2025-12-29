@@ -51,23 +51,29 @@ const SolutionSection = () => {
           className="text-center mb-6"
         >
           <h2 className="text-[clamp(24px,5vw,48px)] font-bold text-[var(--charcoal)] leading-tight mb-4">
-            NẾU CON ĐANG GHÉT TIẾNG ANH...
+            Con bạn không ghét học tiếng Anh.
             <br />
-            <span className="gradient-text">SELA SẼ KHIẾN CON THÍCH LẠI - VÌ HỌC NHƯ XEM PHIM.</span>
+            <span className="gradient-text">Chỉ là ghét cái cảm giác. Học mãi không vào, làm mãi không được.</span>
           </h2>
         </motion.div>
 
         {/* Sub-headline */}
-        <motion.p
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-center text-lg md:text-xl text-gray-600 mb-12 md:mb-16 max-w-3xl mx-auto"
         >
-          Phương pháp{' '}
-          <strong className="text-[var(--coral-burst)]">AI Video Toàn Não</strong>{' '}
-          - Con tưởng đang giải trí, nhưng não đang... học.
-        </motion.p>
+          <p>
+            <strong className="text-[var(--coral-burst)]">SELA ENGLISH</strong>{' '}
+            giúp con yêu tiếng Anh lại từ đầu với cảm giác{' '}
+            <strong className="text-[var(--charcoal)]">CON LÀM ĐƯỢC, CON NHỚ ĐƯỢC</strong>{' '}
+            qua các video AI từ vựng & ngữ pháp học toàn não thuận tự nhiên.
+          </p>
+          <p className="mt-2">
+            Con tưởng đang giải trí, nhưng chữ lại tự chui vào não con một cách tự động.
+          </p>
+        </motion.div>
 
         {/* Two-Column Solution Grid with Glassmorphism */}
         <div className="grid md:grid-cols-2 gap-6 lg:gap-8 mb-10 md:mb-14">
